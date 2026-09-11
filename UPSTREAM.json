@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/MadsLorentzen/ai-job-search",
+  "commit": "8c81edc330b98db0473dcb016e34db835c2fd378",
+  "method": "git committed blobs, never working-tree content",
+  "modifications": [
+    "RolPusula private-workspace boundary and local import command"
+  ]
+}

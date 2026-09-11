@@ -1,0 +1,18 @@
+{
+  "name": "rolpusula",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "İlanlarını seç, başvurunu hazırla. Şifreli yerel kasa ve Claude Code iş akışı.",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/build.mjs",
+    "doctor": "node bin/rolpusula.mjs doctor",
+    "test:browser": "node scripts/browser-test.mjs",
+    "test:pdf": "node scripts/pdf-smoke.mjs"
+  },
+  "devDependencies": { "playwright": "1.62.1" }
+}

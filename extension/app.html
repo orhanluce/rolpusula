@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="tr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RolPusula</title><link rel="stylesheet" href="app.css"></head>
+<body>
+<header><a class="brand" href="app.html" aria-label="RolPusula ana ekranı"><img src="icons/48.png" width="32" height="32" alt="">RolPusula</a><span class="local">Verilerin bu cihazda</span><button id="lock" class="quiet" hidden>Kilitle</button></header>
+<main>
+  <section id="gate">
+    <div class="intro"><h1>Bir sonraki rolün.<br>Senin seçimin.</h1><p>İlanlarını bir araya getir. Deneyiminle karşılaştır. Başvurunu seçtiğin ilan için hazırla.</p></div>
+    <form id="unlock-form" class="gate-form">
+      <h2 id="gate-title">Kasanı aç</h2>
+      <p id="gate-copy">CV ve ilanların parolanla şifrelenir. Parolanı saklamıyoruz; unutursan kurtaramayız.</p>
+      <label for="password">Kasa parolası</label><input id="password" type="password" minlength="12" maxlength="1024" autocomplete="off" required placeholder="En az 12 karakter">
+      <div id="confirm-wrap" hidden><label for="password-confirm">Parolayı yeniden yaz</label><input id="password-confirm" type="password" autocomplete="off" maxlength="1024"></div>
+      <button type="submit" id="unlock-submit">Kasayı aç</button>
+      <p class="hint">Sekme kapandığında veya 5 dakika işlem yapılmadığında kilitlenir. AI kullanımı ayrı bir adımdır.</p>
+    </form>
+  </section>
+  <section id="workspace" hidden>
+    <nav aria-label="Bölümler"><button data-tab="jobs" aria-pressed="true">İlanlarım</button><button data-tab="profile" aria-pressed="false">Profilim</button><button data-tab="privacy" aria-pressed="false">Gizlilik ve aktarım</button></nav>
+    <section id="jobs-panel">
+      <div class="section-head"><div><h1>Hangi rol sana yakın?</h1><p id="job-count">Henüz ilan kaydetmedin.</p></div><button id="new-job">İlan ekle</button></div>
+      <p class="hint">Eşleşme, belirlediğin anahtar kelimelerin ilanda geçme oranıdır. AI değerlendirmesi, ATS puanı veya işe alınma olasılığı değildir.</p>
+      <div id="job-list"></div>
+      <section id="editor" hidden>
+        <h2>İlanı gözden geçir</h2><p>Sayfadan gelen metni kaydetmeden önce kontrol et. Gereksiz kişisel bilgileri çıkar.</p>
+        <button id="capture" class="secondary">Açık sayfadan ilanı al</button>
+        <form id="job-form">
+          <label for="job-title">Pozisyon</label><input id="job-title" maxlength="500" required>
+          <div class="columns"><div><label for="job-company">Şirket</label><input id="job-company" maxlength="300"></div><div><label for="job-status">Durum</label><select id="job-status"></select></div></div>
+          <label for="job-url">İlan bağlantısı (isteğe bağlı)</label><input id="job-url" type="url" maxlength="3000" placeholder="https://…">
+          <label for="job-text">İlan metni</label><textarea id="job-text" rows="9" maxlength="40000" required></textarea>
+          <div class="actions"><button type="submit">İlanı kaydet</button><button type="button" id="cancel-job" class="quiet">Vazgeç</button></div>
+        </form>
+      </section>
+    </section>
+    <section id="profile-panel" hidden>
+      <h1>İşin başında sen varsın.</h1><p>Gerçek deneyimini ekle. Eksik bilgiyi tamamlamak için unvan veya beceri uydurma.</p>
+      <form id="profile-form">
+        <label for="target">Aradığın rol ve konum</label><input id="target" maxlength="500" placeholder="Örneğin: veri analisti, Ankara veya uzaktan">
+        <label for="keywords">Karşılaştırılacak beceriler (virgülle ayır)</label><input id="keywords" maxlength="2000" placeholder="Örneğin: Excel, SQL, raporlama">
+        <label for="resume">CV / deneyim metni</label><textarea id="resume" maxlength="40000" rows="12" placeholder="İletişim bilgilerini eklemek zorunda değilsin. PDF/DOCX belgeni yerel Claude Code kurulumunda /setup ile içeri alabilirsin."></textarea>
+        <button type="submit">Profili şifreli kaydet</button>
+      </form>
+    </section>
+    <section id="privacy-panel" hidden>
+      <h1>Ne saklandığına sen karar ver.</h1>
+      <dl><dt>Bu eklenti</dt><dd>CV ve ilanları parolalı kasada tutar. Ağ bağlantısı, analiz takibi ve bulut eşitlemesi yoktur.</dd><dt>Sayfa erişimi</dt><dd>Yalnızca “Açık sayfadan ilanı al” düğmesiyle, o sekmedeki seçili metin veya ilan bölümü okunur. Form alanları ve çerezler okunmaz.</dd><dt>Claude Code</dt><dd>İndirdiğin paketi içeri alıp Claude'u çalıştırırsan ilgili metin Anthropic'e gönderilir. Eklenti bunu kendiliğinden yapmaz.</dd></dl>
+      <label for="retention">İlanları ne kadar saklayalım?</label><select id="retention"><option value="7">7 gün</option><option value="30">30 gün</option><option value="90">90 gün</option></select><button id="save-retention" class="secondary">Süreyi uygula</button>
+      <p class="hint">Süre ilk kayıttan itibaren hesaplanır. Silme, kasayı açtığında veya süreyi uyguladığında gerçekleşir; kapalı tarayıcıda çalışmaz. Profil silinene kadar kalır.</p>
+      <div class="actions"><button id="backup" class="secondary">Şifreli yedek indir</button><button id="restore-open" class="secondary">Yedekten geri yükle</button><input id="restore" type="file" accept=".json,.rpvault" hidden></div>
+      <p class="hint">Geri yükleme mevcut kasanın üzerine yazmaz. Önce yedeğini alıp mevcut kasayı silmelisin. Kilit ekranında da yedek yükleyebilirsin.</p>
+      <button id="erase" class="danger">Bu cihazdaki kasayı sil</button>
+    </section>
+  </section>
+  <p id="notice" role="status" aria-live="polite"></p>
+  <details id="locked-tools"><summary>Yedek yükleme ve kurtarma</summary><p>Şifreli yedek yalnızca boş kasaya yüklenir. Parola kurtarma servisi yoktur.</p><button id="restore-locked-open" class="secondary">Şifreli yedek seç</button><input type="file" id="restore-locked" accept=".json,.rpvault" hidden><button id="erase-locked" class="danger">Yerel kasayı sil</button></details>
+  <footer>RolPusula 0.1 · Açık kaynak · <a href="guide.html" target="_blank" rel="noopener">Kurulum ve gizlilik</a><button id="expand" class="quiet">Tam sayfa aç</button></footer>
+</main>
+<dialog id="export-dialog" aria-labelledby="export-title">
+  <h2 id="export-title">Başvuru paketini hazırla</h2>
+  <p>Bu dosya <strong>şifrelenmeden</strong> İndirilenler klasörüne kaydedilir. Yalnızca seçtiğin ilanı içerir.</p>
+  <label class="check"><input type="checkbox" id="include-profile">Profilimi de bu pakete ekle</label>
+  <pre id="export-preview"></pre>
+  <label class="check"><input type="checkbox" id="export-consent">İçeriği kontrol ettim. Dosyanın açık metin kaydedileceğini ve Claude Code ile işlediğimde Anthropic'e aktarılacağını anladım.</label>
+  <div class="actions"><button id="export-download" disabled>Paketi indir</button><button id="export-cancel" class="quiet">Vazgeç</button></div>
+  <p class="hint">İndirdikten sonra yerel kurulumda “import” komutunu çalıştır. Kurulum kılavuzunda örnek var.</p>
+</dialog>
+<dialog id="restore-dialog" aria-labelledby="restore-title">
+  <form id="restore-form">
+    <h2 id="restore-title">Şifreli yedeği doğrula</h2>
+    <p>Yedeğin parolasını gir. Mevcut kasanın üzerine yazılmaz.</p>
+    <label for="restore-password">Yedek parolası</label><input id="restore-password" type="password" minlength="12" maxlength="1024" autocomplete="off" required>
+    <div class="actions"><button type="submit">Yedeği yükle</button><button type="button" id="restore-cancel" class="quiet">Vazgeç</button></div>
+  </form>
+</dialog>
+<script type="module" src="app.mjs"></script>
+</body></html>
