@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, writeFile, readdir, mkdir, symlink } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile, readdir, mkdir, symlink, realpath } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { initWorkspace, importJob, ROOT, getWorkspaceProvider, setWorkspaceProvider } from '../bin/workspace.mjs';
@@ -8,7 +8,8 @@ import { makePackage, job, profile } from '../extension/model.mjs';
 test('private installation and import work without a model or any real candidate data', async () => {
   const base = await mkdtemp(path.join(os.tmpdir(), 'rolpusula-unit-'));
   const destination = path.join(base, 'private');
-  assert.equal(await initWorkspace(destination), destination);
+  const initialized = await initWorkspace(destination);
+  assert.equal(initialized, await realpath(destination));
   assert.equal(await readFile(path.join(destination, '.gitignore'), 'utf8'), '*\n');
   assert.deepEqual((await getWorkspaceProvider(destination)).config, {
     format: 'rolpusula-provider', version: 1, provider: 'claude', model: null,
