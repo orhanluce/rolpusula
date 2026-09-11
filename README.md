@@ -4,12 +4,16 @@
 
 **İlanlarını seç. Başvurunu o işe göre hazırla.**
 
+> [!IMPORTANT]
+> İlk kez kullanıyorsan **[adım adım Kullanım Kılavuzu'nu aç](KULLANIM_KILAVUZU.md)**.
+> Yalnız eklenti kurulumu ve AI destekli tam kurulum ayrı ayrı anlatılıyor.
+
 RolPusula, iş aramayı kendi bilgisayarında düzenleyen açık kaynak bir araç.
 Tarayıcıda beğendiğin ilanları parolalı kasana alırsın. Claude Code, OpenAI
 Codex, Gemini CLI veya cihazındaki Ollama modeliyle uygunluk değerlendirmesi,
 ilana özel CV, ön yazı ve ayrı eleştiri turuyla ilerlersin.
 
-[English](README.en.md) · [Gizlilik](PRIVACY.md) · [Kurulum](docs/INSTALL.md) · [Güvenlik](SECURITY.md)
+[Kullanım Kılavuzu](KULLANIM_KILAVUZU.md) · [Son sürümü indir](https://github.com/orhanluce/rolpusula/releases/latest) · [English](README.en.md) · [Gizlilik](PRIVACY.md) · [Güvenlik](SECURITY.md)
 
 Bu repo **ürün kodu ve boş şablonlar** içerir. Hiçbir gerçek adayın CV'si,
 profil bilgisi veya başvuru geçmişi dağıtıma dahil değildir.

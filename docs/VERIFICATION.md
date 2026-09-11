@@ -1,5 +1,14 @@
 # Doğrulama kaydı
 
+## 0.2.1 — 11 Eylül 2026
+
+Son kullanıcı kılavuzu, README giriş bağlantıları ve eklenti içi yardım metni
+eklendi. Kılavuzdaki komutlar mevcut CLI yardımı ve gizlilik sınırlarıyla
+karşılaştırıldı. Node birim testleri **11/11** geçti; yeni test kılavuzun kaynak
+paketinde bulunduğunu doğruluyor. Dağıtım/gizlilik taraması 249 dosyada geçti;
+12 dosyalı eklenti ZIP'i ve 249 dosyalı kaynak ZIP'i üretildi. PDF/model çalışma
+zamanı sınırları 0.2.0 kaydındaki gibidir; bu belge değişikliğinde yeniden çalıştırılmadı.
+
 ## 0.2.0 — 11 Eylül 2026
 
 Yalnızca kurmaca geçici çalışma alanı kullanıldı; gerçek CV veya aday profili

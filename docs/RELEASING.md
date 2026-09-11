@@ -19,7 +19,7 @@ ayarlarında private vulnerability reporting ve secret scanning seçeneklerini
 hesabının desteklediği ölçüde etkinleştir. Kişisel workspace'in remote'u olmamalı.
 
 Sürüm için package.json ve extension/manifest.json değerlerini birlikte değiştir.
-CHANGELOG ekle, testleri çalıştır, ardından v0.2.0 gibi sürüm etiketi oluşturup
+CHANGELOG ekle, testleri çalıştır, ardından v0.2.1 gibi sürüm etiketi oluşturup
 push et. release.yml etiketi doğrular, temiz kaynaktan paket üretir ve GitHub
 Release'e yükler. Kaynak ZIP'i içinde test raporları, CV'ler ve yerel ayarlar yoktur.
 

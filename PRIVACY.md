@@ -1,6 +1,6 @@
 # Gizlilik
 
-RolPusula 0.2.0, hesap açtırmayan bir tarayıcı eklentisi ve ayrı bir AI
+RolPusula 0.2.1, hesap açtırmayan bir tarayıcı eklentisi ve ayrı bir AI
 çalışma alanı kurucusudur. Ürün reposu boş şablonlar içerir; hazır bir kişinin
 CV'sini, iletişim bilgisini veya başvuru geçmişini içermez.
 

@@ -1,7 +1,7 @@
 import { readdir, lstat } from 'node:fs/promises';
 import path from 'node:path';
 export const RELEASE_ROOTS = ['extension', 'bin', 'scripts', 'tests', 'docs', 'assets', 'workspace-template', '.github',
-  'package.json', 'package-lock.json', '.gitignore', '.gitattributes', 'AGENTS.md', 'README.md', 'README.en.md', 'LICENSE', 'PRIVACY.md', 'SECURITY.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'THIRD_PARTY_NOTICES.md', 'UPSTREAM.json', 'FONT-SOURCES.json'];
+  'package.json', 'package-lock.json', '.gitignore', '.gitattributes', 'AGENTS.md', 'README.md', 'README.en.md', 'KULLANIM_KILAVUZU.md', 'LICENSE', 'PRIVACY.md', 'SECURITY.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'THIRD_PARTY_NOTICES.md', 'UPSTREAM.json', 'FONT-SOURCES.json'];
 export async function walk(root, relative = '') {
   const location = path.join(root, relative);
   const info = await lstat(location);

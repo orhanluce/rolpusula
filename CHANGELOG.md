@@ -1,5 +1,11 @@
 # Değişiklikler
 
+## 0.2.1
+
+- Repo köküne son kullanıcılar için adım adım Türkçe kullanım kılavuzu eklendi.
+- README'nin üstüne kılavuz ve son sürüm bağlantıları yerleştirildi.
+- Eklenti içi yardım sayfası dört AI sağlayıcısını anlatacak şekilde güncellendi.
+
 ## 0.2.0
 
 - Claude Code, OpenAI Codex, Gemini CLI ve yerel Ollama arasında çalışma alanı başına seçim.
