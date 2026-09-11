@@ -1,0 +1,7 @@
+description = "Seçilen pazar ve portallarda ilan ara"
+prompt = """
+Read AGENTS.md, .rolpusula-provider.json, and .claude/skills/job-scraper/SKILL.md
+completely. Follow the canonical scrape workflow with this user input:
+{{args}}
+Ask before any external search and never put candidate data in queries.
+"""

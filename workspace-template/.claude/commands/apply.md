@@ -106,7 +106,11 @@ Write both files to disk. Keep the exact text of both drafts in working memory â
 
 ## Step 3: REVIEWER - Research & Critique
 
-Use the **Agent tool** to spawn a `general-purpose` reviewer agent. The reviewer gets a fresh context, so pass the drafts **inline in the prompt** below (do not make the reviewer Read them). Scope the reviewer's file reads to content-critique essentials only â€” the reviewer does not need the template structure files (`05`, `06`) to critique content, since those govern structural/toolchain concerns the drafter already applied.
+Use a fresh subagent when the selected runtime provides one. Pass the drafts
+**inline in the prompt** below and scope its file reads to the listed
+content-critique essentials. If no separate subagent mechanism exists, start a
+clearly labelled fresh reviewer pass in the current runtime, do not call it an
+independent model, and report that limitation to the user.
 
 Replace `<COMPANY>`, `<ROLE>`, `<INSERT_JOB_POSTING_TEXT_HERE>`, `<INSERT_CV_DRAFT_HERE>`, and `<INSERT_COVER_LETTER_DRAFT_HERE>` with actual values before dispatching.
 

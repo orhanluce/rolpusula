@@ -1,5 +1,12 @@
 # Değişiklikler
 
+## 0.2.0
+
+- Claude Code, OpenAI Codex, Gemini CLI ve yerel Ollama arasında çalışma alanı başına seçim.
+- Sağlayıcı ayarında yalnızca sağlayıcı/model adı tutulur; API anahtarı tutulmaz.
+- Codex ve Ollama için taşınabilir `$rolpusula` becerisi, Gemini CLI için proje komutları.
+- Yerel kipte Ollama'nın bulut model adları reddedilir; güvenli başlatma ve tanılama komutları eklendi.
+
 ## 0.1.0
 
 - Chrome/Edge için Manifest V3 eklentisi; Comet uyumluluğu hedeflenir.

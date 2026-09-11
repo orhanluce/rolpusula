@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { parsePackage, MAX_PACKAGE } from '../extension/model.mjs';
+import { writeProviderConfig, readProviderConfig, providerConfig, PROVIDERS, commandAvailable, localModels } from './providers.mjs';
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 function inside(parent, child) { const rel = path.relative(parent, child); return rel === '' || (!rel.startsWith('..' + path.sep) && rel !== '..' && !path.isAbsolute(rel)); }
 async function assertNoLink(file) {
@@ -36,7 +37,8 @@ async function copyPrivate(from, to) {
     await writeFile(to, await readFile(from), { flag: 'wx', mode: 0o600 });
   } else throw new Error('Desteklenmeyen dosya türü.');
 }
-export async function initWorkspace(destination) {
+export async function initWorkspace(destination, provider = 'claude', model = null) {
+  const selection = providerConfig(provider, model);
   const target = path.resolve(destination);
   const parent = await realpath(path.dirname(target)); // Parent must already exist.
   const actual = path.join(parent, path.basename(target));
@@ -45,9 +47,18 @@ export async function initWorkspace(destination) {
   // mkdir is exclusive; never overwrite even an empty existing directory.
   await copyPrivate(path.join(ROOT, 'workspace-template'), actual);
   await writeFile(path.join(actual, '.gitignore'), '*\n', { mode: 0o600 });
+  await writeProviderConfig(actual, selection.provider, selection.model, { initial: true });
   // Marker is written last: interrupted installs can never be imported into.
   await writeFile(path.join(actual, '.rolpusula-workspace.json'), JSON.stringify({ format: 'rolpusula-workspace', version: 1 }) + '\n', { flag: 'wx', mode: 0o600 });
   return actual;
+}
+export async function setWorkspaceProvider(input, provider, model = null) {
+  const dir = await verifyWorkspace(input);
+  return writeProviderConfig(dir, provider, model);
+}
+export async function getWorkspaceProvider(input) {
+  const dir = await verifyWorkspace(input);
+  return { dir, config: await readProviderConfig(dir) };
 }
 export async function verifyWorkspace(input) {
   const resolved = path.resolve(input);
@@ -79,17 +90,17 @@ export async function importJob(filename, workspace) {
   await rename(temp, final);
   return { id, directory: final, includesProfile: !!pack.profile };
 }
-export function doctor() {
+export function doctor(config = null) {
+  const provider = typeof config === 'string' ? config : config?.provider ?? null;
   const checks = [
     ['Node.js 22+', process.execPath, ['--version']],
-    ['Claude Code', 'claude', ['--version']],
     ['Bun (ilan arama)', 'bun', ['--version']],
     ['LuaLaTeX (CV)', 'lualatex', ['--version']],
     ['XeLaTeX (ön yazı)', 'xelatex', ['--version']],
     ['Python 3.10+', process.platform === 'win32' ? 'py' : 'python3', process.platform === 'win32' ? ['-3', '--version'] : ['--version']],
     ['PDF metin denetimi', process.platform === 'win32' ? 'py' : 'python3', [...(process.platform === 'win32' ? ['-3'] : []), '-c', 'import pypdf; print("pypdf", pypdf.__version__)']],
   ];
-  return checks.map(([label, cmd, args]) => {
+  const results = checks.map(([label, cmd, args]) => {
     const result = spawnSync(cmd, args, { encoding: 'utf8', timeout: 15_000, windowsHide: true });
     let ok = result.status === 0;
     if (label === 'Node.js 22+') ok &&= Number(process.versions.node.split('.')[0]) >= 22;
@@ -97,6 +108,20 @@ export function doctor() {
       const v = result.stdout?.match(/Python (\d+)\.(\d+)/);
       ok &&= !!v && (Number(v[1]) > 3 || (Number(v[1]) === 3 && Number(v[2]) >= 10));
     }
-    return { label, ok, detail: ok ? result.stdout.trim().split(/\r?\n/)[0] : 'Bulunamadı veya çalışmadı; kurulum kılavuzuna bakın.' };
+    return { label, ok, required: true, detail: ok ? result.stdout.trim().split(/\r?\n/)[0] : 'Bulunamadı veya çalışmadı; kurulum kılavuzuna bakın.' };
   });
+  for (const [id, p] of Object.entries(PROVIDERS)) {
+    if (provider && id !== provider) continue;
+    const test = commandAvailable(p.command);
+    results.push({ label: p.label, ...test, required: !!provider });
+    if (id === 'ollama') {
+      const ollama = commandAvailable('ollama');
+      results.push({ label: 'Ollama', ...ollama, required: provider === 'ollama' });
+      if (provider === 'ollama' && config?.model) {
+        const installed = localModels().includes(config.model);
+        results.push({ label: 'Seçili yerel model', ok: installed, required: true, detail: installed ? config.model : config.model + ' cihazda bulunamadı.' });
+      }
+    }
+  }
+  return results;
 }

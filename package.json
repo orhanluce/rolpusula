@@ -1,9 +1,9 @@
 {
   "name": "rolpusula",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "İlanlarını seç, başvurunu hazırla. Şifreli yerel kasa ve Claude Code iş akışı.",
+  "description": "İlanlarını seç, başvurunu hazırla. Şifreli kasa ve seçilebilir AI çalışma alanı.",
   "license": "MIT",
   "engines": { "node": ">=22" },
   "scripts": {

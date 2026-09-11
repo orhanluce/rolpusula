@@ -1,18 +1,24 @@
 # Setup Guide
 
+> RolPusula users should begin with `ROL PUSULA - START HERE.md`. This upstream
+> guide contains detailed tool installation notes. Runtime selection is managed
+> by the RolPusula CLI; Claude Code is one option, not a requirement.
+
 Step-by-step instructions for getting the AI Job Search framework running.
 
 ## 1. Prerequisites
 
-### Claude Code
+### AI runtime
 
-Install Claude Code (Anthropic's CLI for Claude):
+Install one supported runtime: Claude Code, OpenAI Codex, Gemini CLI, or Codex
+CLI plus Ollama. Use the official installer for the runtime you select.
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
-You'll need an Anthropic API key or a Claude Pro/Team subscription. See the [Claude Code docs](https://docs.anthropic.com/en/docs/claude-code) for details.
+Cloud runtimes require their own account or API access. Ollama requires a local
+model and Codex CLI. RolPusula does not store API keys.
 
 ### Python
 

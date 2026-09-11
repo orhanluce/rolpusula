@@ -1,0 +1,11 @@
+{
+  "telemetry": { "enabled": false, "logPrompts": false },
+  "privacy": { "usageStatisticsEnabled": false },
+  "security": {
+    "disableYoloMode": true,
+    "disableAlwaysAllow": true,
+    "enablePermanentToolApproval": false,
+    "environmentVariableRedaction": { "enabled": true }
+  },
+  "mcp": { "allowed": [] }
+}

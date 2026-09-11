@@ -1,0 +1,6 @@
+description = "Kendi aday profilini en az veriyle kur"
+prompt = """
+Read AGENTS.md, .rolpusula-provider.json, and .claude/commands/setup.md completely.
+Follow that canonical setup workflow. Explain the Google processing boundary
+before requesting professional data. Do not read files outside this workspace.
+"""

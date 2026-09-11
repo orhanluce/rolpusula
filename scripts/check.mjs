@@ -25,6 +25,15 @@ export async function check(root = ROOT) {
   if (manifest.manifest_version !== 3 || JSON.stringify([...manifest.permissions].sort()) !== JSON.stringify(['activeTab', 'scripting', 'storage'].sort())) errors.push('Permission boundary changed');
   for (const field of ['host_permissions', 'optional_host_permissions', 'content_scripts', 'externally_connectable', 'web_accessible_resources', 'background']) if (manifest[field]) errors.push('Unreviewed extension capability: ' + field);
   if (!manifest.content_security_policy.extension_pages.includes("connect-src 'none'")) errors.push('Network CSP is not closed');
+  const packageJson = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
+  if (packageJson.version !== manifest.version) errors.push('Package and extension versions differ');
+  const geminiSettings = JSON.parse(await readFile(path.join(root, 'workspace-template/.gemini/settings.json'), 'utf8'));
+  if (geminiSettings.telemetry?.enabled !== false || geminiSettings.telemetry?.logPrompts !== false) errors.push('Gemini telemetry defaults changed');
+  if (geminiSettings.security?.disableYoloMode !== true || geminiSettings.security?.disableAlwaysAllow !== true) errors.push('Gemini confirmation boundary changed');
+  for (const file of files.filter(f => f.startsWith('workspace-template/.gemini/commands/') && f.endsWith('.toml'))) {
+    const body = await readFile(path.join(root, file), 'utf8');
+    if (!body.includes('prompt = """') || body.includes('!{')) errors.push('Unsafe or malformed Gemini command: ' + file);
+  }
   for (const file of files.filter(f => f.startsWith('extension/') && f.endsWith('.mjs'))) {
     const body = await readFile(path.join(root, file), 'utf8');
     if (/\b(?:fetch|XMLHttpRequest|WebSocket|sendBeacon|eval)\s*\(|\.innerHTML\s*=|storage\.sync|localStorage/.test(body)) errors.push('Unsafe extension API: ' + file);

@@ -40,9 +40,20 @@ Giriş formu / gizli metin / iframe içeren sayfada yalnızca görünür ilanı 
 İlan alanı yoksa açıklayıcı hata ve elle yapıştırma yolu sunmalı.
 Başka sekmelere kalıcı erişim olmamalı. Form gönderme olmamalı.
 
-Kendi Claude hesabında /setup → /apply-local akışını kurmaca bir profille çalıştır.
-İkinci ajan gerçekten çalışmalı, üretilen PDF'ler derlenip metin katmanı/görünüm
-incelenmeli. Otomatik test bunu LLM çalışmış gibi göstermez.
+Her desteklenen çalışma zamanında kurmaca bir profille setup → apply-local akışını
+çalıştır. Claude/Gemini slash komutlarını; Codex/Ollama `$rolpusula` becerisini
+kullanır. Ayrı alt ajan varsa gerçekten çalışmalı; yoksa raporlanan ayrı eleştiri
+turu uygulanmalı. PDF'lerin metin katmanı ve görünümü incelenmeli. Otomatik test
+bunu bütün modeller çalışmış gibi göstermez.
+
+Sağlayıcı yönlendirmesini model çağırmadan denetlemek için:
+
+    node bin/rolpusula.mjs providers
+    node bin/rolpusula.mjs init ../fictional-workspace --provider codex
+    node bin/rolpusula.mjs provider set ../fictional-workspace ollama --model YOUR_LOCAL_MODEL
+    node bin/rolpusula.mjs doctor ../fictional-workspace
+
+Gerçek CV kullanma. Ollama testi bile yalnızca kurmaca içerikle yapılmalıdır.
 
 TeX kurulumu hazırsa dağıtımdaki boş PDF şablonlarını model çağırmadan denetle:
 

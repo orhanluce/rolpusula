@@ -1,6 +1,6 @@
 # Gizlilik
 
-RolPusula 0.1.0, hesap açtırmayan bir tarayıcı eklentisi ve ayrı bir Claude Code
+RolPusula 0.2.0, hesap açtırmayan bir tarayıcı eklentisi ve ayrı bir AI
 çalışma alanı kurucusudur. Ürün reposu boş şablonlar içerir; hazır bir kişinin
 CV'sini, iletişim bilgisini veya başvuru geçmişini içermez.
 
@@ -40,14 +40,26 @@ tam JSON önizlemesi ve ayrı onay gerekir. Profil seçimi her aktarımda kapal�
 Bağlantılardan takip parametreleri ve parçalar kaldırılır; bazı ilan kimlikleri korunur.
 URL yolu veya korunmuş kimlik alanları yine özel veri içerebilir; önizlemeyi kontrol edin.
 
-CLI içe aktarma yalnızca diske yazar; kendiliğinden model çalıştırmaz. Claude Code
-oturumunu başlattığınızda ilgili bağlam **Anthropic** tarafından işlenir.
-Sağlayıcının hesabınıza/planınıza ait saklama ve eğitim tercihleri geçerlidir.
-Bu üründe bunları değiştiren veya geçersiz kılan bir ayar yoktur.
+CLI içe aktarma yalnızca diske yazar; kendiliğinden model çalıştırmaz. Seçim
+`.rolpusula-provider.json` içinde sağlayıcı ve isteğe bağlı model adı olarak tutulur;
+API anahtarı, parola veya oturum bilgisi tutulmaz.
+
+| Seçenek | Model bağlamı | Hesap/ağ sınırı |
+|---|---|---|
+| Claude Code | Anthropic bulutu | Kendi Claude hesabınız ve sağlayıcı ayarlarınız |
+| OpenAI Codex | OpenAI bulutu | Kendi OpenAI hesabınız ve sağlayıcı ayarlarınız |
+| Gemini CLI | Google bulutu | Kendi Google hesabınız ve sağlayıcı ayarlarınız |
+| Ollama | Cihazdaki Ollama modeli | Çıkarım yerel; Codex CLI ajan kabuğu sandbox/onaylarla çalışır |
+
+Bulut sağlayıcısının hesabınıza/planınıza ait saklama ve eğitim tercihleri
+geçerlidir; RolPusula bunları değiştiremez. Ollama kipinde `cloud` işaretli model
+adları reddedilir. Bu, bilgisayarınızdaki başka yazılımların trafiğini engelleyen
+bir çevrimdışılık garantisi değildir. Codex interaktif kipte diğer kullanıcı
+ayarlarını yükleyebilir; etkin hook/plugin yapılandırmanızı ayrıca denetleyin.
+Ayrıca onayladığınız şirket/ilan araştırması
+ve portal araması yine ağa çıkabilir.
 Üçüncü taraf arama portalları da /scrape çağrılarında sorgu ve IP adresinizi görebilir.
 Opsiyonel e-posta/Notion entegrasyonları ancak ayrıca seçildiğinde kullanılmalıdır.
-Opsiyonel Gemini araştırma ajanı da ayrıca açık onay ister: yalnızca önizlenen
-kamuya açık şirket/rol sorgusunu Google'a iletebilir; CV veya profil göndermez.
 
 ## Yerel çalışma alanı
 
@@ -72,4 +84,6 @@ Comet gibi bir tarayıcının kendi veri politikası eklentinin politikasından 
 
 Kaynaklar: [Chrome activeTab](https://developer.chrome.com/docs/extensions/develop/concepts/activeTab),
 [Chrome storage](https://developer.chrome.com/docs/extensions/reference/api/storage),
-[Anthropic privacy](https://www.anthropic.com/legal/privacy).
+[Anthropic privacy](https://www.anthropic.com/legal/privacy),
+[OpenAI privacy](https://openai.com/policies/privacy-policy/),
+[Google privacy](https://policies.google.com/privacy).

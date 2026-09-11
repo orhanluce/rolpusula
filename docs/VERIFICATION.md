@@ -1,6 +1,24 @@
 # Doğrulama kaydı
 
-RolPusula 0.1.0 / 11 Eylül 2026. Windows üzerinde, yalnızca kurmaca test
+## 0.2.0 — 11 Eylül 2026
+
+Yalnızca kurmaca geçici çalışma alanı kullanıldı; gerçek CV veya aday profili
+kullanılmadı. Node birim testleri **10/10** geçti. Dağıtım/gizlilik taraması 247
+dosyada geçti; 12 dosyalı eklenti ZIP'i ve 247 dosyalı kaynak ZIP'i üretildi.
+CLI ile Codex çalışma alanı oluşturma, Ollama'ya geçiş ve seçili yerel modelin
+tanılanması çalıştı. Codex 0.144.6 + Ollama 0.34.0 üzerinden yerel
+`deepseek-r1:latest` modeli kurmaca isteme yanıt verdi.
+
+Gemini CLI bu bilgisayarda kurulu değildi; Gemini komutları ve gizlilik ayarları
+statik test edildi ama gerçek Gemini oturumu çalıştırılmadı. Claude ve OpenAI bulut
+model akışları da hesap kullanılarak uçtan uca çalıştırılmadı. MiKTeX eksikleri
+nedeniyle PDF derleme sınırı aşağıdaki 0.1.0 kaydındaki gibi sürüyor. 0.2.0'da
+tarayıcı otomasyonu yeniden çalıştırılmadı; eklenti mantığı değişmedi, yalnız sürüm
+metni değişti.
+
+## 0.1.0 — 11 Eylül 2026
+
+Windows üzerinde, yalnızca kurmaca test
 verileri ve boş dağıtım şablonları kullanıldı. Gerçek aday CV'si kullanılmadı.
 
 ## Geçen kontroller

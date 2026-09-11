@@ -22,8 +22,10 @@ Kapalı popup içeriği kaybolur; uzun profil düzenlemesi için Tam sayfa aç k
 Eklenti bu programları kendiliğinden indirmez veya kurmaz:
 
 - [Node.js](https://nodejs.org/en/download): 22 veya üstü.
-- [Claude Code](https://code.claude.com/docs/en/setup): resmî kurucuyu kullan.
-  İlk claude çalıştırmasında kendi hesabınla giriş yap. Hesap ücretleri sana aittir.
+- Şunlardan biri: [Claude Code](https://code.claude.com/docs/en/setup),
+  [OpenAI Codex CLI](https://developers.openai.com/codex/cli/),
+  [Gemini CLI](https://github.com/google-gemini/gemini-cli) veya
+  [Ollama](https://docs.ollama.com/) + Codex CLI. Bulut hesabı ve ücretleri sana aittir.
 - [Bun](https://bun.sh/docs/installation): portal arama komutları için.
 - [Python](https://www.python.org/downloads/): 3.10 veya üstü.
 - [MiKTeX](https://miktex.org/download) (Windows) veya
@@ -31,8 +33,9 @@ Eklenti bu programları kendiliğinden indirmez veya kurmaz:
 
 Node kurulduktan sonra ürün klasöründe:
 
-    node bin/rolpusula.mjs doctor
-    node bin/rolpusula.mjs init ../basvurularim
+    node bin/rolpusula.mjs providers
+    node bin/rolpusula.mjs init ../basvurularim --provider claude
+    node bin/rolpusula.mjs doctor ../basvurularim
 
 Çalışma klasörünün üst dizini var olmalı, hedef klasör henüz var olmamalı.
 Ürün reposunun veya başka Git reposunun içine oluşturulamaz. Bulut eşitlenen
@@ -62,10 +65,28 @@ Minimal TeX Live için örnek paket seti:
 
 Dağıtımına bağlı ek paketler istenebilir; workspace-template/SETUP.md daha ayrıntılıdır.
 
+## AI seçimi
+
+Kurulumda `claude`, `codex`, `gemini` veya `ollama` seç. Ollama için `ollama list`
+çıktısındaki cihaz içi model adını vermek zorunludur:
+
+    node bin/rolpusula.mjs init ../basvurularim --provider ollama --model qwen3:8b
+
+Mevcut çalışma alanında seçim değişebilir; CV ve ilanlar aynı klasörde kalır:
+
+    node bin/rolpusula.mjs provider ../basvurularim
+    node bin/rolpusula.mjs provider set ../basvurularim codex
+    node bin/rolpusula.mjs launch ../basvurularim
+
+RolPusula sağlayıcı anahtarı saklamaz veya paket kurmaz. Claude/Codex/Gemini
+buluttur. Ollama model çıkarımı yereldir; `cloud` işaretli Ollama modelleri
+reddedilir. Portal araması ve ayrıca onaylanan web araştırması çevrimdışı değildir.
+
 ## İlk başvuru
 
-Yeni çalışma alanında claude → /setup. Kendi CV'ni ver ya da mülakata gir.
-PDF/DOCX metin çıkarma Claude ortamındaki araçlara bağlıdır; okunamadığında
+`launch` ile seçilen çalışma zamanını aç. Claude/Gemini içinde `/setup`,
+Codex/Ollama içinde `$rolpusula setup` yaz. Kendi CV'ni ver ya da mülakata gir.
+PDF/DOCX metin çıkarma çalışma zamanındaki araçlara bağlıdır; okunamadığında
 metni kendin yapıştırabilirsin. RolPusula eklentisi PDF/DOCX ayrıştırmaz.
 
 /scrape ilan arar; /apply URL uygunluğu değerlendirir.

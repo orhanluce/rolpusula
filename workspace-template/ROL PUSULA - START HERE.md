@@ -4,13 +4,16 @@ Bu klasör yalnızca sizin başvurularınız içindir; paylaşılacak ürün rep
 Kurulum aracı .gitignore dosyasına * yazar, Git reposu başlatmaz ve remote eklemez.
 Klasörü bulut eşitlenen bir konuma koyarsanız işletim sisteminiz dosyaları eşitleyebilir.
 
-1. Bu klasörde terminal açın, claude çalıştırın ve /setup yazın.
+1. Ürün klasöründe `node bin/rolpusula.mjs launch "BU_KLASOR"` çalıştırın.
+   Claude/Gemini için /setup, Codex/Ollama için `$rolpusula setup` yazın.
 2. Kendi CV'nizi documents/cv altına koyun veya mülakat sorularını cevaplayın.
 3. /scrape ile ilanları arayın; önce pazar, konum ve kaynakları seçin.
-4. Eklenti paketini import komutuyla alın; dönen /apply-local komutunu çalıştırın.
+4. Eklenti paketini import komutuyla alın; komutun gösterdiği apply-local görevini çalıştırın.
 5. Bir ilan URL'si için doğrudan /apply de kullanılabilir.
 
-Claude Code ücretli abonelik/API gerektirebilir. Sağladığınız metin Anthropic'te işlenir.
+Claude Code, OpenAI Codex ve Gemini CLI kendi hesabınızı/API erişiminizi ve ağ
+bağlantısını kullanır. Ollama seçeneğinde model çıkarımı cihazda yapılır; ancak
+ilan araştırması gibi ayrıca onayladığınız web adımları yine ağa çıkabilir.
 Bu çalışma alanındaki belgeler açık metin/PDF dosyalarıdır; eklenti kasası gibi
 şifrelenmez. BitLocker/FileVault gibi disk şifrelemesi ve kişisel OS hesabı kullanın.
 

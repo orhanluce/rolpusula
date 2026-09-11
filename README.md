@@ -5,9 +5,9 @@
 **İlanlarını seç. Başvurunu o işe göre hazırla.**
 
 RolPusula, iş aramayı kendi bilgisayarında düzenleyen açık kaynak bir araç.
-Tarayıcıda beğendiğin ilanları parolalı kasana alırsın. Claude Code tarafında
-kendi profilinle uygunluk değerlendirmesi, ilana özel CV, ön yazı ve ikinci ajan
-eleştirisiyle ilerlersin.
+Tarayıcıda beğendiğin ilanları parolalı kasana alırsın. Claude Code, OpenAI
+Codex, Gemini CLI veya cihazındaki Ollama modeliyle uygunluk değerlendirmesi,
+ilana özel CV, ön yazı ve ayrı eleştiri turuyla ilerlersin.
 
 [English](README.en.md) · [Gizlilik](PRIVACY.md) · [Kurulum](docs/INSTALL.md) · [Güvenlik](SECURITY.md)
 
@@ -17,7 +17,7 @@ profil bilgisi veya başvuru geçmişi dağıtıma dahil değildir.
 ![RolPusula ilan ekranı, tamamen kurmaca örnek verilerle](docs/screenshots/workspace.png)
 
 Erken sürümün [doğrulama kaydı](docs/VERIFICATION.md): tarayıcı ve çekirdek
-testleri ile henüz doğrulanmamış Claude/PDF/Comet adımları ayrı raporlanır.
+testleri ile henüz doğrulanmamış model/PDF/Comet adımları ayrı raporlanır.
 
 ## İndir ve kur
 
@@ -41,26 +41,39 @@ Chrome Web Store ve Edge Add-ons'ta yayınlanmış bir listeleme henüz yoktur.
 
 ### AI ile CV ve ön yazı hazırlama
 
-Node.js 22+, Claude Code ve geçerli Claude aboneliği/API erişimi gerekir.
+Node.js 22+ ve şu seçeneklerden biri gerekir: Claude Code, OpenAI Codex,
+Gemini CLI veya Ollama ile birlikte Codex CLI. Bulut seçeneklerinde kendi
+hesabını; Ollama'da cihazına indirdiğin modeli kullanırsın.
 PDF çıktısı için Python 3.10+, pypdf, LuaLaTeX ve XeLaTeX; portal araması için Bun gerekir.
 Eksikleri [adım adım kurulum kılavuzu](docs/INSTALL.md) anlatır.
 
 Ürün klasöründe terminal aç:
 
-    node bin/rolpusula.mjs doctor
-    node bin/rolpusula.mjs init ../basvurularim
+    node bin/rolpusula.mjs providers
+    node bin/rolpusula.mjs init ../basvurularim --provider codex
+    node bin/rolpusula.mjs doctor ../basvurularim
+    node bin/rolpusula.mjs launch ../basvurularim
 
 Kurucu ürün reposunun **dışında**, yalnızca sana ait yeni bir çalışma klasörü açar.
 Mevcut bir klasörün üzerine yazmaz, Git reposu veya remote oluşturmaz.
 
-    cd ../basvurularim
-    claude
-
-Claude Code içinde:
+Claude veya Gemini içinde:
 
     /setup
     /scrape
     /apply https://isveren.example.com/ilan/123
+
+Codex veya yerel Ollama içinde aynı işler `$rolpusula setup`,
+`$rolpusula scrape` ve `$rolpusula apply <ilan>` olarak çağrılır.
+
+Sağlayıcıyı sonradan değiştirebilirsin; CV dosyaları aynı özel klasörde kalır:
+
+    node bin/rolpusula.mjs provider set ../basvurularim gemini
+    node bin/rolpusula.mjs provider set ../basvurularim ollama --model qwen3:8b
+
+RolPusula API anahtarı saklamaz. Bulut CLI'larında oturum ve ücretlendirme ilgili
+sağlayıcı hesabına aittir. Ollama seçeneği model çıkarımını cihazda yapar; model
+adı zorunludur ve `cloud` işaretli Ollama modelleri yerel kipte reddedilir.
 
 /setup ile **kendi CV'ni** ver veya kısa mülakata gir. Aranacak pazar ve
 portalları seç. /scrape ilanları profilinle değerlendirir. /apply önce
@@ -68,7 +81,7 @@ uygunluğu gösterir; devam etmeyi seçersen CV/ön yazıyı hazırlar, ikinci a
 eleştirir, PDF derlenir ve okunabilirliği kontrol edilir. İşverene gönderim
 senin kontrolündedir.
 
-### Tarayıcıdan Claude'a
+### Tarayıcıdan seçtiğin AI'a
 
 Eklentide **Başvuru hazırla** → içeriği gözden geçir → **Paketi indir**.
 Profil pakete ancak ayrıca işaretlersen eklenir.
@@ -77,8 +90,8 @@ Profil pakete ancak ayrıca işaretlersen eklenir.
     node bin/rolpusula.mjs import "/indirilenler/paket.rpjob.json" ../basvurularim
 
 Windows'ta dosya yolunu tırnak içinde tam olarak yaz; klasörleri kendi konumlarına göre değiştir.
-Komutun gösterdiği **/apply-local kimlik** ifadesini özel çalışma klasöründeki
-Claude Code oturumuna yapıştır. Profil yoksa önce /setup yönlendirmesi gelir.
+Komutun gösterdiği **apply-local kimlik** ifadesini özel çalışma klasöründeki
+AI oturumuna yapıştır. Profil yoksa önce setup yönlendirmesi gelir.
 
 ## Gizlilik varsayılanları
 
@@ -87,13 +100,15 @@ bölümünü okur; sürekli gezinme izlemez. Profil ve ilanlar AES-256-GCM ile
 şifrelenir. Parola saklanmaz, beş dakika hareketsizlikte kasa kilitlenir.
 Saklama süresi, tek ilan silme, tüm kasayı silme ve şifreli yedek seçenekleri vardır.
 
-**Sınır açık:** Başvuru paketi açık metin dosyasıdır. Claude Code'u çalıştırdığında
-verdiğin içerik Anthropic'e gider. Özel çalışma klasöründeki CV ve PDF'ler
-şifrelenmez. [Veri akışı ve sınırları](PRIVACY.md) okumadan gerçek CV yükleme.
+**Sınır açık:** Başvuru paketi açık metin dosyasıdır. Claude, Codex veya Gemini
+seçersen verdiğin içerik ilgili bulut sağlayıcısında işlenir. Ollama seçersen model
+çıkarımı cihazda yapılır; ayrıca onayladığın ilan araştırmaları yine internete
+çıkabilir. Özel çalışma klasöründeki CV ve PDF'ler şifrelenmez.
+[Veri akışı ve sınırları](PRIVACY.md) okumadan gerçek CV yükleme.
 
 ## Ne yapar, neyi iddia etmez?
 
-| Tarayıcı eklentisi | Claude Code çalışma alanı |
+| Tarayıcı eklentisi | Seçilebilir AI çalışma alanı |
 |---|---|
 | Kullanıcının seçtiği ilanı kaydetme ve takip | Profil mülakatı / CV içeri alma |
 | Açıklanabilir anahtar kelime karşılaştırması | Gerekçeli uygunluk değerlendirmesi |
@@ -116,7 +131,7 @@ SHA256SUMS.txt oluşturur. Paketler yalnızca açıkça listelenmiş kaynakları
 Tarayıcı testi için [test kılavuzunu](docs/TESTING.md) kullan.
 
 Mimari: extension/ (Manifest V3), bin/ (özel çalışma alanı CLI),
-workspace-template/ (Claude akışları ve portal araçları), tests/ (gizlilik ve işlev testleri).
+workspace-template/ (ortak akışlar ve portal araçları), tests/ (gizlilik ve işlev testleri).
 Yeni sürüm yayınlama ve mağaza başvurusu: [RELEASING](docs/RELEASING.md).
 
 ## Köken ve lisans

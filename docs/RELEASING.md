@@ -19,7 +19,7 @@ ayarlarında private vulnerability reporting ve secret scanning seçeneklerini
 hesabının desteklediği ölçüde etkinleştir. Kişisel workspace'in remote'u olmamalı.
 
 Sürüm için package.json ve extension/manifest.json değerlerini birlikte değiştir.
-CHANGELOG ekle, testleri çalıştır, ardından v0.1.0 gibi sürüm etiketi oluşturup
+CHANGELOG ekle, testleri çalıştır, ardından v0.2.0 gibi sürüm etiketi oluşturup
 push et. release.yml etiketi doğrular, temiz kaynaktan paket üretir ve GitHub
 Release'e yükler. Kaynak ZIP'i içinde test raporları, CV'ler ve yerel ayarlar yoktur.
 
@@ -33,7 +33,8 @@ Hesap/ücret/inceleme tamamlanmadan mağaza bağlantısı veya rozet yayımlama.
 Başvuru paketinde single purpose: kullanıcının seçtiği iş ilanını yerel kaydetme,
 profilindeki kelimelerle karşılaştırma ve kullanıcı onayıyla dışa aktarma.
 İzin gerekçeleri PRIVACY.md'deki tabloda; telemetry/sale/remote-code yoktur.
-Mağazanın veri beyanlarını gerçek akışla doldur; Claude'a manuel aktarımı gizleme.
+Mağazanın veri beyanlarını gerçek akışla doldur; seçilen AI sağlayıcısına manuel
+aktarımı veya yerel çalışma alanındaki açık metin dosyaları gizleme.
 Şifreli yedeği veya gerçek kullanıcının CV'sini ekran görüntüsüne koyma.
 
 Comet için ayrı uzantı paketi gerektirmeyen Chromium Manifest V3 hedeflenir.

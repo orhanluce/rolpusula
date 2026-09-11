@@ -18,7 +18,8 @@ documents and direct the user to run node bin/rolpusula.mjs init ../my-applicati
 from the product folder. Do not initialize Git or change any remote as a workaround.
 This check is local; do not contact GitHub.
 
-Explain before collecting data: Claude Code sends supplied context to Anthropic;
+Read `.rolpusula-provider.json`. Explain before collecting data whether the selected
+runtime sends supplied context to its cloud provider or uses local Ollama inference;
 local candidate files are plaintext, outside the distribution repository. Ask only
 for professional facts needed for the chosen role. Contact details are optional.
 
@@ -30,7 +31,7 @@ Then welcome the user with a single message that lists three paths. The wording 
 
 > **Welcome to the AI Job Search setup!**
 >
-> I'll help you build your professional profile so Claude can evaluate job postings, tailor CVs, write cover letters, and prepare you for interviews.
+> I'll help you build your professional profile so the selected AI can evaluate job postings, tailor CVs, write cover letters, and prepare you for interviews.
 >
 > I see files in your `documents/` folder: [list per subfolder, e.g. "2 in cv/, 1 in linkedin/, 3 in references/"]. Three ways to start:
 >
@@ -46,7 +47,7 @@ Then welcome the user with a single message that lists three paths. The wording 
 
 > **Welcome to the AI Job Search setup!**
 >
-> I'll help you build your professional profile so Claude can evaluate job postings, tailor CVs, write cover letters, and prepare you for interviews.
+> I'll help you build your professional profile so the selected AI can evaluate job postings, tailor CVs, write cover letters, and prepare you for interviews.
 >
 > Three ways to start:
 >
